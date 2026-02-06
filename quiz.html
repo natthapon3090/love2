@@ -102,22 +102,35 @@
   </div>
 </div>
 
-<!-- 📧 SEND MAIL -->
+<!-- 📧 SEND ANSWERS -->
 <div class="popup" id="sendPopup">
   <div class="popup-box">
     <h2>ส่งคำตอบแล้ว 💌</h2>
-    <p>กดปุ่มด้านล่างเพื่อส่งคำตอบทั้งหมดทางอีเมล</p>
-    <button class="btn" onclick="sendMail()">ส่งอีเมล 💕</button>
+    <p>กดปุ่มด้านล่างเพื่อส่งคำตอบทั้งหมด</p>
+
+    <form
+      action="https://formspree.io/f/mzdapnlk"
+      method="POST"
+      onsubmit="afterSend()"
+    >
+      <!-- 🔴 ใส่อีเมลปลายทาง -->
+      <input type="hidden" name="email" value="customer@email.com">
+
+      <input type="hidden" name="_subject" value="คำตอบ Quiz ของเรา 💗">
+      <input type="hidden" name="answers" id="answerField">
+
+      <button class="btn" type="submit">
+        ส่งคำตอบ 💕
+      </button>
+    </form>
   </div>
 </div>
 
-<div class="back-menu-btn" onclick="location.href='menu.html'">ฟ
+<div class="back-menu-btn" onclick="location.href='menu.html'">
   ← เมนู
 </div>
 
 <script>
-const TARGET_EMAIL = "garfield11kp@email.com"; // 🔴 แก้เมลตรงนี้
-
 const quiz = [
   {q:"เราเจอกันครั้งแรกที่ไหน?",a:["มหาลัย","ออนไลน์","ร้านกาแฟ","งานเลี้ยง"],c:1},
   {q:"เราชอบกินอะไรด้วยกันที่สุด?",a:["หมูกระทะ","ชาบู","ของหวาน","ทุกอย่าง"],c:3},
@@ -159,25 +172,23 @@ function nextQuestion(){
   if(index < quiz.length){
     render();
   }else{
+    prepareAnswers();
     sendPopup.style.display="flex";
   }
 }
 
-function sendMail(){
-  let body = "สรุปคำตอบ Quiz ของเรา 💗\n\n";
+function prepareAnswers(){
+  let text = "";
   quiz.forEach((q,i)=>{
-    body += `ข้อ ${i+1}: ${q.q}\nคำตอบ: ${answers[i]}\n\n`;
+    text += `ข้อ ${i+1}: ${q.q}\nคำตอบ: ${answers[i]}\n\n`;
   });
+  document.getElementById("answerField").value = text;
+}
 
-  const subject = encodeURIComponent("คำตอบ Quiz ของเรา 💌");
-  const content = encodeURIComponent(body);
-
-  window.location.href =
-    `mailto:${TARGET_EMAIL}?subject=${subject}&body=${content}`;
-
+function afterSend(){
   setTimeout(()=>{
     location.href="final.html";
-  },1000);
+  },1200);
 }
 
 render();
