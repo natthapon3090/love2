@@ -48,14 +48,12 @@
   font-size:20px;
 }
 
-/* ===== HEART SHAPE (เพิ่มแถวที่ 2 อีก 2 รูปแล้ว) ===== */
-/* row 1 */
+/* ===== HEART SHAPE ===== */
 .heart div:nth-child(1){grid-column:2}
 .heart div:nth-child(2){grid-column:3}
 .heart div:nth-child(3){grid-column:5}
 .heart div:nth-child(4){grid-column:6}
 
-/* row 2 (เต็ม 7 ช่อง) */
 .heart div:nth-child(5){grid-column:1}
 .heart div:nth-child(6){grid-column:2}
 .heart div:nth-child(7){grid-column:3}
@@ -64,19 +62,16 @@
 .heart div:nth-child(10){grid-column:6}
 .heart div:nth-child(11){grid-column:7}
 
-/* row 3 */
 .heart div:nth-child(12){grid-column:2}
 .heart div:nth-child(13){grid-column:3}
 .heart div:nth-child(14){grid-column:4}
 .heart div:nth-child(15){grid-column:5}
 .heart div:nth-child(16){grid-column:6}
 
-/* row 4 */
 .heart div:nth-child(17){grid-column:3}
 .heart div:nth-child(18){grid-column:4}
 .heart div:nth-child(19){grid-column:5}
 
-/* row 5 */
 .heart div:nth-child(20){grid-column:4}
 
 /* ================= SLIDESHOW ================= */
@@ -121,6 +116,24 @@
   align-items:center;
   justify-content:center;
 }
+
+/* ===== BACK BUTTON ===== */
+.back-btn{
+  margin-top:10px; /* 👈 ชิด กดง่าย */
+  width:100%;
+  padding:12px 0;
+  border:none;
+  border-radius:16px;
+  font-size:14px;
+  font-weight:600;
+  color:#6a63ff;
+  background:#f1f0ff;
+  box-shadow:0 6px 16px rgba(106,99,255,.25);
+  cursor:pointer;
+}
+.back-btn:active{
+  transform:scale(.96);
+}
 </style>
 </head>
 
@@ -132,8 +145,7 @@
 
   <!-- ❤️ HEART -->
   <div class="heart-wrap" id="heartWrap">
-    <div class="heart" id="heart">
-      <!-- 20 blocks -->
+    <div class="heart">
       <div></div><div></div><div></div><div></div>
       <div></div><div></div><div></div><div></div><div></div><div></div><div></div>
       <div></div><div></div><div class="center">❤️</div><div></div><div></div>
@@ -154,6 +166,11 @@
     <div class="voice-play" id="icon">▶️</div>
     กดเพื่อเปิดเพลง
   </div>
+
+  <!-- 🔙 BACK -->
+  <button class="back-btn" onclick="location.href='menu.html'">
+    ← กลับหน้าเมนู
+  </button>
 </div>
 
 <script>
@@ -163,7 +180,6 @@ const heartWrap = document.getElementById("heartWrap");
 const blocks = document.querySelectorAll(".heart div");
 const slideshow = document.getElementById("slideshow");
 
-/* รูปตัวอย่าง */
 const images = [
  "https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e",
  "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee",
@@ -171,7 +187,6 @@ const images = [
  "https://images.unsplash.com/photo-1517841905240-472988babdf9"
 ];
 
-/* ใส่รูป (ยกเว้นหัวใจกลาง) */
 let imgIndex = 0;
 blocks.forEach(b=>{
   if(!b.classList.contains("center")){
@@ -180,7 +195,6 @@ blocks.forEach(b=>{
   }
 });
 
-/* สร้าง slideshow */
 images.forEach((img,i)=>{
   const s = document.createElement("div");
   s.className = "slide" + (i===0 ? " active":"");
@@ -205,7 +219,6 @@ function toggleVoice(){
   }
 }
 
-/* ===== REVEAL EVERY 1.5s ===== */
 function startReveal(){
   if(revealTimer) return;
 
@@ -225,7 +238,6 @@ function startReveal(){
   }, 1500);
 }
 
-/* ===== SLIDESHOW ===== */
 function startSlideshow(){
   if(slideshowTimer) return;
 
